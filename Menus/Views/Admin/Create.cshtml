@@ -1,0 +1,72 @@
+﻿@model Menus.Models.Dish
+
+@{
+    ViewData["Title"] = "Добави ново ястие";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="p-4 rounded" style="background-color: #ffddca; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                <h2 class="mb-4 text-center" style="color:#6B4226; font-weight:700;">@ViewData["Title"]</h2>
+
+                <form asp-action="Create" asp-controller="Admin" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-4">
+                        <label asp-for="Name" class="form-label fw-semibold" style="color:#6B4226;">Име на ястието</label>
+                        <input asp-for="Name" class="form-control form-control-lg rounded-3" autocomplete="name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Description" class="form-label fw-semibold" style="color:#6B4226;">Описание</label>
+                        <textarea asp-for="Description" class="form-control form-control-lg rounded-3" rows="4" autocomplete="off"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Price" class="form-label fw-semibold" style="color:#6B4226;">Цена (лв.)</label>
+                        <input asp-for="Price" class="form-control form-control-lg rounded-3" type="number" step="0.01" autocomplete="off" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Category" class="form-label fw-semibold" style="color:#6B4226;">Категория</label>
+                        <select asp-for="Category" class="form-select form-select-lg rounded-3" required>
+                            <option value="" disabled selected>-- Изберете категория --</option>
+                            <option value="Салати">Салати</option>
+                            <option value="Топли предястия">Топли предястия</option>
+                            <option value="Студени предястия">Студени предястия</option>
+                            <option value="Десерти">Десерти</option>
+                            <option value="Основни">Основни</option>
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ImageUrl" class="form-label fw-semibold" style="color:#6B4226;">URL на изображението</label>
+                        <input asp-for="ImageUrl" class="form-control form-control-lg rounded-3" autocomplete="off" />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="MenuId" class="form-label fw-semibold" style="color:#6B4226;">Menu ID (по избор)</label>
+                        <input asp-for="MenuId" class="form-control form-control-lg rounded-3" type="number" autocomplete="off" />
+                        <span asp-validation-for="MenuId" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-lg btn-success px-5 rounded-pill">Запази</button>
+                        <a asp-action="Index" class="btn btn-lg btn-secondary px-5 rounded-pill">Отказ</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

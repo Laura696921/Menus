@@ -1,0 +1,147 @@
+﻿@model List<Dish>
+
+@{
+    var category = ViewData["Category"] as string ?? "Категория";
+    ViewData["Title"] = $"Ястия - {category}";
+}
+
+<style>
+    body {
+        background-color: #fff4e6; /* Soft peach background */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+        max-width: 960px;
+        margin-top: 3.5rem;
+        margin-bottom: 3.5rem;
+    }
+
+    .text-primary {
+        color: #d87a4b !important; /* peachy brown */
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        color: #a45c2a;
+    }
+
+        .breadcrumb a {
+            color: #d87a4b;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+            .breadcrumb a:hover {
+                color: #b55a24;
+            }
+
+    h2 {
+        color: #d87a4b;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .alert-warning {
+        background-color: #ffe7c6;
+        color: #a45c2a;
+        border: none;
+        text-align: center;
+        font-weight: 600;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 3px 8px rgba(216, 122, 75, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        background-color: white;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(216, 122, 75, 0.35);
+        }
+
+    .card-img-top {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 180px;
+        object-fit: cover;
+        user-select: none;
+    }
+
+    .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1.25rem 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #a45c2a;
+        margin-bottom: 1rem;
+        text-align: center;
+        user-select: none;
+    }
+
+    .badge {
+        font-size: 1.2rem;
+        padding: 0.5em 1em;
+        background-color: #d87a4b;
+        color: white;
+        border-radius: 12px;
+        user-select: none;
+    }
+</style>
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Categories", "Customer")">Категории</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@category</li>
+        </ol>
+    </nav>
+
+    <h2>Ястия в категория: <span class="text-primary">@category</span></h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+            Все още няма добавени ястия в тази категория.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var dish in Model)
+            {
+                <div class="col">
+                    <a href="@Url.Action("Details", "Customer", new { id = dish.Id })" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm">
+                            <img src="@dish.ImageUrl" class="card-img-top" alt="@dish.Name" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">@dish.Name</h5>
+                                <div class="d-flex justify-content-center mt-3">
+                                    <span class="badge">@dish.Price.ToString("0.00") лв</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+</div>

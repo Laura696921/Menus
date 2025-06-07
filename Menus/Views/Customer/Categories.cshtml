@@ -1,0 +1,73 @@
+﻿@model List<string>
+
+@{
+    ViewData["Title"] = "Категории Храна";
+}
+
+<style>
+    body {
+        background-color: #fff4e6; /* Soft peach background */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+        max-width: 900px;
+        margin-top: 3.5rem;
+        margin-bottom: 3.5rem;
+    }
+
+    h2 {
+        color: #81472a; /* Warm peachy brown */
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .category-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 3px 8px rgba(216, 122, 75, 0.15);
+        transition: all 0.3s ease;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150px;
+    }
+
+        .category-card:hover {
+            background-color: #ffd9b8; /* Light peach highlight */
+            cursor: pointer;
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(216, 122, 75, 0.35);
+        }
+
+    .card-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #a45c2a; /* Darker peach/brown for text */
+        user-select: none;
+        text-align: center;
+    }
+
+    a.text-decoration-none {
+        text-decoration: none !important;
+    }
+</style>
+
+<div class="container">
+    <h2>Изберете категория</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var category in Model)
+        {
+            <div class="col">
+                <a href="@Url.Action("Category", "Customer", new { name = category })" class="text-decoration-none">
+                    <div class="card category-card">
+                        <h4 class="card-title">@category</h4>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>

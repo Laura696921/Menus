@@ -1,0 +1,129 @@
+﻿@model Menus.Models.Review
+
+@{
+    ViewData["Title"] = "Остави отзив";
+}
+
+<style>
+    body {
+        background: #f6dbcb; /* Peachy background */
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .text-primary {
+        color: #d87a4b !important;
+    }
+
+    .review-form-container {
+        background: #fffaf3;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 700px;
+        margin: 50px auto;
+    }
+
+        .review-form-container h2 {
+            color: #a0522d;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+    label {
+        font-weight: 600;
+        color: #6b3e26;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+        padding: 10px 15px;
+        border: 1px solid #d2b48c;
+        background-color: #fffdf9;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #ffa07a;
+            box-shadow: 0 0 6px rgba(255, 160, 122, 0.5);
+        }
+
+    .btn-success {
+        background-color: #ff9966;
+        border-color: #ff9966;
+        border-radius: 8px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+        color: white;
+    }
+
+        .btn-success:hover {
+            background-color: #ff7f50;
+        }
+
+    .alert-success {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        background: #d4edda;
+        color: #155724;
+        border-radius: 6px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .text-danger {
+        font-size: 14px;
+    }
+</style>
+
+<div class="container">
+    <div class="review-form-container">
+        <h2>Оставете своя отзив</h2>
+
+        @if (TempData["successmessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["successmessage"]</div>
+        }
+
+        <form asp-action="LeaveReview" method="post" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label asp-for="Name" class="form-label">Вашето име</label>
+                <input asp-for="Name" class="form-control" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Comment" class="form-label">Коментар</label>
+                <textarea asp-for="Comment" rows="4" class="form-control" required></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Rating" class="form-label">Оценка</label>
+                <select asp-for="Rating" class="form-select" required>
+                    <option value="">-- Изберете --</option>
+                    <option value="5">5 - Отлично</option>
+                    <option value="4">4 - Много добро</option>
+                    <option value="3">3 - Добро</option>
+                    <option value="2">2 - Слабо</option>
+                    <option value="1">1 - Лошо</option>
+                </select>
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">Изпрати</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

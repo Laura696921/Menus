@@ -1,0 +1,121 @@
+﻿@model Menus.Models.ContactFormModel
+
+@{
+    ViewData["Title"] = "Контакти";
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #ffe6e1, #ffd3b6);
+        min-height: 100vh;
+    }
+    .contact-container {
+        max-width: 600px;
+        margin: 3rem auto;
+        padding: 2rem 2.5rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 128, 128, 0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    h2 {
+        color: #1f0705;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    label {
+        font-weight: 600;
+        color: #1f0705;
+    }
+    .form-control {
+        border: 1.5px solid #eecccc;
+        ;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: #008080;
+        box-shadow: 0 0 8px rgba(0, 128, 128, 0.3);
+        outline: none;
+    }
+    .btn-primary {
+        background-color: #008080;
+        border: none;
+        padding: 10px 28px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #006666;
+    }
+    .btn-secondary {
+        background-color: #ccc;
+        border: none;
+        padding: 10px 28px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        color: #444;
+        transition: background-color 0.3s ease;
+    }
+    .btn-secondary:hover {
+        background-color: #bbb;
+    }
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 4px;
+    }
+    .alert-success {
+        background-color: #b2dfdb;
+        border-color: #80cbc4;
+        color: #004d40;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 12px 20px;
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>
+
+<div class="contact-container">
+    <h2>Свържете се с нас</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form asp-action="Contact" method="post" class="needs-validation" novalidate>
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-4">
+            <label asp-for="Name" class="form-label">Име</label>
+            <input asp-for="Name" class="form-control" autocomplete="name" placeholder="Вашето име" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Email" class="form-label">Имейл</label>
+            <input asp-for="Email" type="email" class="form-control" autocomplete="email" placeholder="example@mail.com" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Message" class="form-label">Съобщение</label>
+            <textarea asp-for="Message" class="form-control" rows="5" autocomplete="off" placeholder="Вашето съобщение..."></textarea>
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Изпрати</button>
+        <a asp-action="Index" class="btn btn-secondary ms-3">Отказ</a>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

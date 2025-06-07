@@ -1,0 +1,61 @@
+﻿@model Menus.Models.Dish
+
+@{
+    ViewData["Title"] = "Потвърди изтриване";
+}
+
+<h2 class="text-center mb-4 text-danger">@ViewData["Title"]</h2>
+
+<style>
+    .delete-container {
+        max-width: 500px;
+        margin: 30px auto;
+        background-color: #fff3e0; /* soft peach */
+        padding: 25px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .delete-container h4 {
+        color: #d9534f; /* bootstrap danger red */
+        margin-bottom: 15px;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    .delete-container p {
+        color: #6c757d; /* muted text */
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    .btn-danger {
+        background-color: #d87f49; /* peachy red/orange */
+        border-color: #d87f49;
+        padding: 10px 30px;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-danger:hover {
+        background-color: #c46d3a;
+        border-color: #c46d3a;
+    }
+    .btn-secondary {
+        margin-left: 15px;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="delete-container">
+    <h4>@Model.Name</h4>
+    <p>@Model.Description</p>
+    <p><strong>Цена:</strong> @Model.Price.ToString("0.00") лв</p>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="margin-top: 25px;">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Изтрий</button>
+        <a asp-action="Index" class="btn btn-secondary">Назад</a>
+    </form>
+</div>

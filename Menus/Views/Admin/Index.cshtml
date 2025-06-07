@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Menus.Models.Dish>
+
+@{
+    ViewData["Title"] = "Ястия";
+    var categories = ViewBag.Categories as List<string>;
+    var selectedCategory = ViewBag.SelectedCategory as string;
+}
+
+<form method="get" class="mb-3">
+    <label for="categoryFilter" class="form-label">Филтрирай по категория:</label>
+    <select id="categoryFilter" name="category" class="form-select" onchange="this.form.submit()">
+        <option value="">Всички</option>
+        @foreach (var cat in categories)
+        {
+            <option value="@cat" selected="@(cat == selectedCategory ? "selected" : null)">@cat</option>
+        }
+    </select>
+</form>
+
+<table class="table align-middle table-hover">
+    <thead>
+        <tr>
+            <th style="width: 120px;">Снимка</th>
+            <th>Име</th>
+            <th>Описание</th>
+            <th>Цена</th>
+            <th>Категория</th>
+            <th style="width: 130px; text-align: right;">Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dish in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@dish.ImageUrl" alt="@dish.Name" class="img-thumbnail" style="max-width: 100px; max-height: 80px; object-fit: cover;" />
+                </td>
+                <td>@dish.Name</td>
+                <td>@dish.Description</td>
+                <td>@dish.Price.ToString("0.00") лв</td>
+                <td>
+                    <span style="color: #FFAB76; font-weight: 600; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                        @dish.Category
+                    </span>
+                </td>
+                <td class="text-end">
+                    <a href="@Url.Action("Edit", "Admin", new { id = dish.Id })" class="btn btn-sm btn-primary me-1 action-btn" title="Редактирай">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", "Admin", new { id = dish.Id })" class="btn btn-sm btn-danger action-btn" title="Изтрий">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Admin")" class="btn btn-success mt-3">
+    <i class="bi bi-plus-circle me-1"></i> Добави ново ястие
+</a>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <style>
+        /* Smooth button hover with scale and shadow */
+        .action-btn {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .action-btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+        /* Row highlight on hover */
+        tbody tr:hover {
+            background-color: #fff3e0; /* soft peach */
+            transition: background-color 0.3s ease;
+        }
+
+        /* Slightly bolder category text */
+        td > span {
+            font-weight: 700;
+        }
+    </style>
+}

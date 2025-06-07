@@ -1,0 +1,88 @@
+﻿@model Menus.Models.Dish
+
+@{
+    ViewData["Title"] = "Редактирай ястие";
+    var categories = new List<string> { "Салати", "Топли предястия", "Студени предястия", "Десерти", "Основни" };
+}
+
+<h2 class="text-center mb-4 text-primary">@ViewData["Title"]</h2>
+
+<style>
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff3e0; /* soft peach background */
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label {
+        font-weight: 600;
+        color: #d87f49; /* peachy text color */
+    }
+    .form-control, .form-select {
+        border-radius: 6px;
+        border: 1px solid #d87f49;
+    }
+    .btn-primary {
+        background-color: #d87f49;
+        border-color: #d87f49;
+    }
+    .btn-primary:hover {
+        background-color: #c46d3a;
+        border-color: #c46d3a;
+    }
+</style>
+
+<form asp-action="Edit" asp-controller="Admin" asp-route-id="@Model.Id" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Име на ястието</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Описание</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Цена (лв.)</label>
+        <input asp-for="Price" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Category" class="form-label">Категория</label>
+        <select asp-for="Category" class="form-select" required>
+            <option value="" disabled>-- Изберете категория --</option>
+            @foreach (var cat in categories)
+            {
+                <option value="@cat" selected="@(cat == Model.Category ? "selected" : null)">@cat</option>
+            }
+        </select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label">Снимка (URL)</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MenuId" class="form-label">Menu ID</label>
+        <input asp-for="MenuId" class="form-control" type="number" />
+        <span asp-validation-for="MenuId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Запази</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Отказ</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
